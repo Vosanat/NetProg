@@ -1,26 +1,17 @@
-# Усложненный make-file.  Введены переменные для параметров компиляции и исполняемых файлов
 
-.PHONY: all debug release 
+.PHONY: all debug 
 
-RELEASE_FLAGS = -O2 -Wall -DNDEBUG
-DEBUG_FLAGS   = -g -O0 -Wall
-RELEASE_EXEC  =  client
-DEBUG_EXEC    =  client-dbg
-SOURCE        =  $(wildcard *.cpp)
-MASS		 =	 client.cpp
+CXXFLAGS 	  =  -std=c++11 -Wall -DNDEBUG
+EXEC  		=  client
+SOURCE        =  $(wildcard *.cpp) 
 
-all: debug release
+all: debug 
 
-debug: $(DEBUG_EXEC)
+debug: $(EXEC)
 
-$(DEBUG_EXEC): MASS
-	g++ $(DEBUG_FLAGS) MASS -o $(DEBUG_EXEC) 
-
-release: $(RELEASE_EXEC)
-
-$(RELEASE_EXEC): MASS
-	g++ $(RELEASE_FLAGS) MASS -o $(RELEASE_EXEC)
+$(EXEC): main.cpp
+	g++ $(CXXFLAGS) main.cpp -o $(EXEC) 
 
 clean:
-	rm -f $(RELEASE_EXEC) $(DEBUG_EXEC)
+	rm -f $(EXEC) 
 
